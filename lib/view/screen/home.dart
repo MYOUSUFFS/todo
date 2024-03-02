@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todo/view/screen/task/task.dart';
 
+import '../widget/box_shadow.dart';
+
 class MyHome extends StatelessWidget {
   const MyHome({super.key});
   final String taskList = "MyTask";
@@ -43,23 +45,7 @@ class MyHome extends StatelessWidget {
             MyTask(),
             Visibility(
               visible: false,
-              child: Container(
-                width: 200,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(10),
-                    top: Radius.circular(5),
-                  ),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      offset: Offset(2, 5),
-                      blurRadius: 6,
-                      spreadRadius: 4,
-                      color: Color(0xFF000000).withOpacity(.20),
-                    ),
-                  ],
-                ),
+              child: MyBoxShadow(
                 child: ListView(
                   shrinkWrap: true,
                   children: [
@@ -76,6 +62,48 @@ class MyHome extends StatelessWidget {
                 ),
               ),
             ),
+            Visibility(
+              visible: false,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 50, right: 10),
+                  child: MyBoxShadow(
+                    top: 10,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: [
+                          Text(
+                            "Sort by",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          ListTile(
+                            title: Text("New First"),
+                            leading: Icon(Icons.done_rounded),
+                          ),
+                          ListTile(
+                            title: Text("Old First"),
+                            leading: Icon(null),
+                          ),
+                          Divider(
+                            thickness: 1,
+                            color: Colors.grey.shade300,
+                          ),
+                          ListTile(
+                            title: Text("Rename"),
+                          ),
+                          ListTile(
+                            title: Text("Delete list"),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
