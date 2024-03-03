@@ -28,14 +28,14 @@ class TaskList {
   String? taskDescription;
   String? taskEndDate;
   bool taskStatus;
-  String taskCreate;
+  String taskId;
 
   TaskList({
     required this.taskName,
     this.taskDescription,
     this.taskEndDate,
     required this.taskStatus,
-    required this.taskCreate,
+    required this.taskId,
   });
 
   factory TaskList.fromJson(Map<String, dynamic> json) => TaskList(
@@ -43,7 +43,7 @@ class TaskList {
         taskDescription: json["task-description"],
         taskEndDate: json["task-end-date"],
         taskStatus: json["task-status"],
-        taskCreate: json["task-create"],
+        taskId: json["task-id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,6 +51,6 @@ class TaskList {
         "task-description": taskDescription,
         "task-end-date": taskEndDate,
         "task-status": taskStatus,
-        "task-create": taskCreate,
+        "task-id": taskId,
       };
 }

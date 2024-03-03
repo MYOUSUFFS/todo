@@ -58,8 +58,8 @@ class _TaskInputState extends State<TaskInput> {
               child: Row(
                 children: [
                   Icon(Icons.calendar_today),
-                  SizedBox(width: 5),
-                  Text(date != null ? myDateFormate(date!) : " Date/Time"),
+                  SizedBox(width: 8),
+                  Text(date != null ? myDateFormate(date!) : "Date/Time"),
                 ],
               ),
             ),
@@ -83,7 +83,7 @@ class _TaskInputState extends State<TaskInput> {
                       taskDescription: details.text,
                       taskEndDate: date != null ? date.toString() : null,
                       taskStatus: false,
-                      taskCreate: DateTime.now().toString());
+                      taskId: DateTime.now().toString());
                   provider.addNewTaskToList(task);
                   Navigator.pop(context);
                 },
@@ -122,7 +122,11 @@ class TaskView extends StatelessWidget {
       leading: Icon(Icons.circle_outlined),
       title: Text(
         '${task.taskName}',
-        style: TextStyle(fontWeight: FontWeight.w500),
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          overflow: TextOverflow.ellipsis,
+        ),
+        maxLines: 2,
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,6 +170,8 @@ class _TaskEditState extends State<TaskEdit> {
   void initState() {
     title = TextEditingController(text: widget.task.taskName);
     details = TextEditingController(text: widget.task.taskDescription);
+    if (widget.task.taskEndDate != null)
+      date = DateTime.parse(widget.task.taskEndDate!);
     super.initState();
   }
 
@@ -206,7 +212,11 @@ class _TaskEditState extends State<TaskEdit> {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Row(
-                children: [],
+                children: [
+                  Icon(Icons.calendar_today),
+                  SizedBox(width: 8),
+                  Text(date != null ? myDateFormate(date!) : "Date/Time"),
+                ],
               ),
             ),
           ),
@@ -215,6 +225,7 @@ class _TaskEditState extends State<TaskEdit> {
             children: [
               IconButton(
                 onPressed: () {
+                  provider.removeTaskFromList(widget.task.taskId);
                   Navigator.pop(context);
                 },
                 icon: Icon(
@@ -224,8 +235,12 @@ class _TaskEditState extends State<TaskEdit> {
               ),
               IconButton(
                 onPressed: () {
-                  //  TaskList  _task =  TaskList(taskName: taskName, taskStatus: taskStatus, taskCreate: taskCreate)
-                  // provider.editTaskToList(_task);
+                  provider.editTaskToList(
+                    widget.task.taskId,
+                    name: title.text,
+                    description: details.text,
+                    date_time: date != null ? date.toString() : null,
+                  );
                   Navigator.pop(context);
                 },
                 icon: Icon(

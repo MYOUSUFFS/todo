@@ -5,8 +5,8 @@ import 'package:todo/model/task.dart';
 
 import '../widget/task_widget.dart';
 
-final TextEditingController heading = TextEditingController();
 newTaskTitle(BuildContext context) {
+  final TextEditingController heading = TextEditingController();
   final provider = Provider.of<MainProvider>(context, listen: false);
   showDialog(
       context: context,
@@ -14,6 +14,7 @@ newTaskTitle(BuildContext context) {
         return AlertDialog(
           title: Text("New Heading"),
           content: TextFormField(
+            autofocus: true,
             controller: heading,
             decoration: InputDecoration(
               hintText: "Heading",
@@ -50,14 +51,16 @@ newTaskAdded(BuildContext context) {
   );
 }
 
-editTask(BuildContext context,TaskList task) {
+editTask(BuildContext context, TaskList task) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
       title: Text("Edit Task"),
       content: SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: TaskEdit(task: task,),
+        child: TaskEdit(
+          task: task,
+        ),
       ),
     ),
   );

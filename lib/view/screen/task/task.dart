@@ -41,7 +41,9 @@ class _MyTaskState extends State<MyTask> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  provider.doSubTaskOptions();
+                },
                 icon: Icon(
                   Icons.menu,
                   color: Colors.grey,
