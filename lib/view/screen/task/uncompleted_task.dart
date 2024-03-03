@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/provider.dart';
+import '../../utils/new_task.dart';
+import '../../widget/task_widget.dart';
 
 class UncompletedTask extends StatelessWidget {
   const UncompletedTask({super.key});
@@ -16,18 +18,12 @@ class UncompletedTask extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        // DateTime _date = DateTime.now()
-        //     .add(Duration(days: 10))
-        //     .subtract(Duration(days: index));
-        return TaskWidget(
-          index: index,
-          date: task[index].taskEndDate != null
-              ? DateTime.parse(task[index].taskEndDate!)
-              : DateTime(2000),
-          edit: edit,
-        );
+        return InkWell(
+            onTap: () {
+              editTask(context,task[index]);
+            },
+            child: TaskView(task: task[index]));
       },
-      //  Text("data $index"),
       itemCount: task!.length,
     );
   }
@@ -43,8 +39,6 @@ class TaskWidget extends StatelessWidget {
 
   Color identifyPriority(DateTime taskDate) {
     DateTime now = DateTime.now();
-    // DateFormat().parse(date);
-
     if (taskDate.isBefore(now))
       return Colors.red; // If the task is overdue, show it in red color
     else if ((taskDate.day - now.day) <= 1 &&

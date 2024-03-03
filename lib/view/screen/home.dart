@@ -4,7 +4,7 @@ import 'package:todo/controller/provider.dart';
 import 'package:todo/view/screen/task/task.dart';
 
 import '../widget/box_shadow.dart';
-import 'task/new_task.dart';
+import '../utils/new_task.dart';
 
 class MyHome extends StatelessWidget {
   const MyHome({super.key});

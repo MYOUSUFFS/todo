@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:todo/controller/provider.dart';
 import '../../../model/task.dart';
 import '../../utils/const.dart';
-import 'new_task.dart';
+import '../../utils/new_task.dart';
 import 'uncompleted_task.dart';
 
 class MyTask extends StatefulWidget {
