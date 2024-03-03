@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/controller/provider.dart';
 import 'package:todo/view/screen/task/task.dart';
 
 import '../widget/box_shadow.dart';
+import 'task/new_task.dart';
 
 class MyHome extends StatelessWidget {
   const MyHome({super.key});
@@ -9,6 +12,9 @@ class MyHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<MainProvider>(
+      context,
+    );
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -17,25 +23,42 @@ class MyHome extends StatelessWidget {
               "Tasks".toUpperCase(),
               style: TextStyle(
                 letterSpacing: 2,
-                // fontWeight: FontWeight.bold,
                 color: Colors.grey,
                 fontSize: 12,
               ),
             ),
             subtitle: InkWell(
-              onTap: () {},
-              // borderRadius: BorderRadius.circular(20),
+              onTap: () {
+                if (provider.task.isEmpty) {
+                  newTaskTitle(context);
+                } else {}
+              },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    "$taskList",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500,
+                  if (provider.task.isEmpty) ...[
+                    Text(
+                      "Add Task",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                  Icon(Icons.arrow_drop_down_sharp)
+                    SizedBox(width: 10),
+                    Icon(
+                      Icons.add_chart,
+                    )
+                  ] else ...[
+                    Text(
+                      "${provider.task[provider.currentTaskIs].taskTitle}",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Icon(Icons.arrow_drop_down_sharp)
+                  ],
                 ],
               ),
             )),

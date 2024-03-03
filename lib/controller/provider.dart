@@ -5,6 +5,8 @@ class MainProvider with ChangeNotifier {
   List<Task> _task = [];
   List<Task> get task => _task;
 
+  int currentTaskIs = 0;
+
   // --------- New Task Title  -----------
   addTaskTitle(String title) {
     _task.add(
@@ -13,6 +15,7 @@ class MainProvider with ChangeNotifier {
         taskList: [],
       ),
     );
+    currentTaskIs = _task.length - 1;
     notifyListeners();
   }
 
@@ -23,21 +26,21 @@ class MainProvider with ChangeNotifier {
   // --- End of New Task Title ----
 
   // ------- Adding a new Task to the list --------
-  addNewTaskToList(TaskList task, int index) {
-    _task[index].taskList!.add(task);
+  addNewTaskToList(TaskList task) {
+    _task[currentTaskIs].taskList!.add(task);
     notifyListeners();
   }
 
-  editTaskToList(TaskList task, int index) {
-    int subTaskIndex = _task[index]
+  editTaskToList(TaskList task) {
+    int subTaskIndex = _task[currentTaskIs]
         .taskList!
         .indexWhere((e) => e.taskCreate == task.taskCreate);
-    _task[index].taskList![subTaskIndex] = task;
+    _task[currentTaskIs].taskList![subTaskIndex] = task;
     notifyListeners();
   }
 
-  removeTaskFromList(int index, int subTaskIndex) {
-    _task[index].taskList!.removeAt(subTaskIndex);
+  removeTaskFromList(int subTaskIndex) {
+    _task[currentTaskIs].taskList!.removeAt(subTaskIndex);
     notifyListeners();
   }
   //  ----- End of Adding a new Task to the list ------

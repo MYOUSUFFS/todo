@@ -24,7 +24,6 @@ class Task {
 }
 
 class TaskList {
-  String taskId;
   String taskName;
   String? taskDescription;
   String? taskEndDate;
@@ -32,7 +31,6 @@ class TaskList {
   String taskCreate;
 
   TaskList({
-    required this.taskId,
     required this.taskName,
     this.taskDescription,
     this.taskEndDate,
@@ -41,7 +39,6 @@ class TaskList {
   });
 
   factory TaskList.fromJson(Map<String, dynamic> json) => TaskList(
-        taskId: json["task-id"],
         taskName: json["task-name"],
         taskDescription: json["task-description"],
         taskEndDate: json["task-end-date"],
@@ -50,7 +47,6 @@ class TaskList {
       );
 
   Map<String, dynamic> toJson() => {
-        "task-id": taskId,
         "task-name": taskName,
         "task-description": taskDescription,
         "task-end-date": taskEndDate,

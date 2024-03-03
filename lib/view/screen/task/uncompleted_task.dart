@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../../../controller/provider.dart';
 
 class UncompletedTask extends StatelessWidget {
   const UncompletedTask({super.key});
 
-  final bool edit = true;
+  final bool edit = false;
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<MainProvider>(context, listen: false);
+    final task = provider.task[provider.currentTaskIs].taskList;
     return ListView.builder(
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        DateTime _date = DateTime.now()
-            .add(Duration(days: 10))
-            .subtract(Duration(days: index));
+        // DateTime _date = DateTime.now()
+        //     .add(Duration(days: 10))
+        //     .subtract(Duration(days: index));
         return TaskWidget(
           index: index,
-          date: _date,
+          date: task[index].taskEndDate != null
+              ? DateTime.parse(task[index].taskEndDate!)
+              : DateTime(2000),
           edit: edit,
         );
       },
       //  Text("data $index"),
-      itemCount: 100,
+      itemCount: task!.length,
     );
   }
 }

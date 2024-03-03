@@ -1,4 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/controller/provider.dart';
+import 'package:todo/model/task.dart';
+import 'package:todo/view/utils/date_time.dart';
+import 'package:todo/view/utils/date_view.dart';
+
+final TextEditingController heading = TextEditingController();
+newTaskTitle(BuildContext context) {
+  final provider = Provider.of<MainProvider>(context, listen: false);
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("New Heading"),
+          content: TextFormField(
+            controller: heading,
+            decoration: InputDecoration(
+              hintText: "Heading",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                provider.addTaskTitle(heading.text);
+                Navigator.pop(context);
+              },
+              child: Text("Submit"),
+            )
+          ],
+        );
+      });
+}
 
 newTaskAdded(BuildContext context) {
   showDialog(
@@ -21,15 +56,26 @@ class TaskView extends StatelessWidget {
   }
 }
 
-class TaskInput extends StatelessWidget {
-  const TaskInput({
-    super.key,
-  });
+class TaskInput extends StatefulWidget {
+  TaskInput({super.key});
+
+  @override
+  State<TaskInput> createState() => _TaskInputState();
+}
+
+class _TaskInputState extends State<TaskInput> {
+  DateTime? date;
+  final TextEditingController title = TextEditingController();
+  final TextEditingController details = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<MainProvider>(context, listen: false);
+
     return ListTile(
       title: TextFormField(
+        autofocus: true,
+        controller: title,
         decoration: InputDecoration(
           hintText: "Title",
           border: InputBorder.none,
@@ -39,24 +85,31 @@ class TaskInput extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextFormField(
-            autofocus: true,
+            controller: details,
             decoration: InputDecoration(
-              isCollapsed: true,
+              // isCollapsed: true,
               hintText: "Details",
               border: InputBorder.none,
             ),
-            style: TextStyle(color: Colors.grey, fontSize: 12),
+            style: TextStyle(color: Colors.grey, fontSize: 14),
             minLines: 1,
             maxLines: 4,
           ),
           InkWell(
-            onTap: () {},
+            onTap: () async {
+              final dateIs = await selectDate(context);
+              if (dateIs != null) {
+                date = dateIs;
+                setState(() {});
+              }
+            },
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Row(
                 children: [
                   Icon(Icons.calendar_today),
-                  Text(" Date/Time"),
+                  SizedBox(width: 5),
+                  Text(date != null ? myDateFormate(date!) : " Date/Time"),
                 ],
               ),
             ),
@@ -65,14 +118,24 @@ class TaskInput extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 icon: Icon(
                   Icons.delete_outline_rounded,
                   color: Colors.red,
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  final task = TaskList(
+                      taskName: title.text,
+                      taskDescription: details.text,
+                      taskEndDate: date.toString(),
+                      taskStatus: false,
+                      taskCreate: DateTime.now().toString());
+                  provider.addNewTaskToList(task);
+                },
                 icon: Icon(
                   Icons.done,
                   color: Colors.green,
