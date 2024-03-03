@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../utils/const.dart';
+import 'new_task.dart';
 import 'uncompleted_task.dart';
 
 class MyTask extends StatelessWidget {
@@ -19,7 +20,9 @@ class MyTask extends StatelessWidget {
                   color: Colors.blueAccent,
                 ),
                 title: Text("Add a task"),
-                onTap: () {},
+                onTap: () {
+                  newTaskAdded(context);
+                },
                 titleTextStyle: TextStyle(color: Colors.blueAccent),
               ),
             ),
@@ -33,13 +36,13 @@ class MyTask extends StatelessWidget {
           ],
         ),
         Visibility(
-          visible: true,
+          visible: false,
           child: Expanded(
             child: UncompletedTask(),
           ),
         ),
         Visibility(
-          visible: false,
+          visible: true,
           child: Expanded(
             child: Column(
               mainAxisSize: MainAxisSize.min,

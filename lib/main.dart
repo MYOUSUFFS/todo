@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/controller/provider.dart';
 import 'package:todo/view/screen/home.dart';
 
 void main() {
@@ -10,9 +12,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MyHome(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => MainProvider()),
+      ],
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: MyHome(),
+      ),
     );
   }
 }
