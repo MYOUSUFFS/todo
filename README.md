@@ -14,5 +14,5 @@ This is a simple Todo App inspired by the UI design of Google Todo, built using 
 
 ## Getting Started
 
-To run this application online, you need to go [Flutter](https://flutter.dev/).
+To run this application online, you need to go [Todo](https://myousuffs.github.io/todo-web).
 
