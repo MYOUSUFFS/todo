@@ -88,6 +88,7 @@ class _MyTaskState extends State<MyTask> {
           if (provider.task.isNotEmpty &&
               provider.task[provider.currentTaskIs].taskList!.isNotEmpty)
             ListTile(
+              tileColor: Colors.lightBlue.shade50.withOpacity(0.5),
               leading: Icon(provider.completedTaskShow
                   ? Icons.arrow_drop_down_outlined
                   : Icons.arrow_right_outlined),

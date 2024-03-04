@@ -164,7 +164,7 @@ class _MyHomeState extends State<MyHome> {
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 ListTile(
-                                  title: Text("Up Coming"),
+                                  title: Text("Upcoming"),
                                   leading: Icon(provider.sortBy == "new"
                                       ? Icons.done_rounded
                                       : null),
@@ -188,13 +188,14 @@ class _MyHomeState extends State<MyHome> {
                                 // const ListTile(
                                 //   title: Text("Rename"),
                                 // ),
-                                 ListTile(
+                                ListTile(
                                   title: Text(
                                     "Delete All",
                                     style: TextStyle(color: Colors.red),
                                   ),
-                                  onTap: (){
-                                    provider.deleteTaskTitleWithThatList(provider.currentTaskIs);
+                                  onTap: () {
+                                    provider.deleteTaskTitleWithThatList(
+                                        provider.currentTaskIs);
                                   },
                                 )
                               ],

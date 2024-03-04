@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MyInputDecoration {
-  inputDecoration(String hintText) => InputDecoration(
+  InputDecoration inputDecoration(String hintText) => InputDecoration(
         hintText: hintText,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
       );
+}
+
+extension MyInput on String {
+  String trimAndRemove() => this.trim().replaceAll(" ", "");
 }

@@ -1,12 +1,18 @@
+// import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+// import 'package:json_theme/json_theme.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/view/screen/auth.dart';
 
 import 'controller/provider.dart';
 import 'firebase_options.dart';
+import 'view/screen/auth.dart';
 import 'view/screen/home.dart';
+
+// import 'view/utils/const.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,8 +22,28 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeData? theme;
+  @override
+  void initState() {
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   _addedFn();
+    // });
+    super.initState();
+  }
+
+  // _addedFn() async {
+  //   final themeStr = await rootBundle.loadString(MyTodoImages.lightThemeJson);
+  //   final themeJson = jsonDecode(themeStr);
+  //   theme = ThemeDecoder.decodeThemeData(themeJson)!;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +53,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        // theme: theme,
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
