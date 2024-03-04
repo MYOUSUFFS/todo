@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../controller/provider.dart';
 import '../../model/task.dart';
 import '../utils/date_time.dart';
-import '../utils/date_view.dart';
 
 class TaskInput extends StatefulWidget {
   const TaskInput({super.key});
@@ -21,7 +21,6 @@ class _TaskInputState extends State<TaskInput> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<MainProvider>(context);
-
     return ListTile(
       title: TextFormField(
         autofocus: true,
@@ -118,9 +117,16 @@ class TaskView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print("${task.taskEndDate}");
+    final provider = Provider.of<MainProvider>(context);
     return ListTile(
-      leading: const Icon(Icons.circle_outlined),
+      leading: IconButton(
+        onPressed: () {
+          provider.taskCompleted(task.taskId);
+          toast("Task Updated");
+        },
+        padding: EdgeInsets.all(8),
+        icon: Icon(task.taskStatus ? Icons.done : Icons.circle_outlined),
+      ),
       title: Text(
         task.taskName,
         style: const TextStyle(

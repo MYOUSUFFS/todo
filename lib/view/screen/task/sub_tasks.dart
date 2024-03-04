@@ -6,25 +6,29 @@ import '../../../controller/provider.dart';
 import '../../utils/new_task.dart';
 import '../../widget/task_widget.dart';
 
-class UncompletedTask extends StatelessWidget {
-  const UncompletedTask({super.key});
+class SubTasksList extends StatelessWidget {
+  const SubTasksList({super.key, required this.viewIs});
+  final bool viewIs;
 
   final bool edit = false;
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<MainProvider>(context, listen: false);
+    final provider = Provider.of<MainProvider>(context);
     final task = provider.task[provider.currentTaskIs].taskList;
     return ListView.builder(
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        return InkWell(
-            onTap: () {
-              editTask(context, task[index]);
-            },
-            child: TaskView(task: task![index]));
+        if (task[index].taskStatus == viewIs)
+          return InkWell(
+              onTap: () {
+                editTask(context, task[index]);
+              },
+              child: TaskView(task: task[index]));
+        else
+          return SizedBox();
       },
-      itemCount: provider.task[provider.currentTaskIs].taskList!.length,
+      itemCount: task!.length,
     );
   }
 }

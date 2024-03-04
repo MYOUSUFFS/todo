@@ -4,7 +4,7 @@ import 'package:todo/controller/provider.dart';
 import '../../../model/task.dart';
 import '../../utils/const.dart';
 import '../../utils/new_task.dart';
-import 'uncompleted_task.dart';
+import 'sub_tasks.dart';
 
 class MyTask extends StatefulWidget {
   const MyTask({super.key});
@@ -54,7 +54,7 @@ class _MyTaskState extends State<MyTask> {
           ),
         if (listTasks?.isNotEmpty ?? false)
           const Expanded(
-            child: UncompletedTask(),
+            child: SubTasksList(viewIs: false),
           ),
         if (listTasks?.isEmpty ?? true)
           Expanded(
@@ -83,19 +83,20 @@ class _MyTaskState extends State<MyTask> {
               ],
             ),
           ),
-        ListTile(
-          leading: const Icon(Icons.arrow_right_outlined),
-          title: const Text("Completed"),
-          onTap: () {},
-        ),
-        Visibility(
-          visible: false,
-          child: ListView.builder(
-            itemCount: 0,
-            itemBuilder: (context, index) => const ListTile(),
+        if (provider.task.isNotEmpty &&
+            provider.task[provider.currentTaskIs].taskList!.isNotEmpty)
+          ListTile(
+            leading: Icon(provider.completedTaskShow
+                ? Icons.arrow_drop_down_outlined
+                : Icons.arrow_right_outlined),
+            title: const Text("Completed"),
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => SubTasksList(viewIs: true),
+              );
+            },
           ),
-        )
-        // Text("data"),
       ],
     );
   }

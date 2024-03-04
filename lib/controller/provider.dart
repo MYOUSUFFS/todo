@@ -23,6 +23,7 @@ class MainProvider with ChangeNotifier {
 
   changeCurrentTask(int index) {
     _currentTaskIs = index;
+    closeAllOption();
     notifyListeners();
   }
 
@@ -109,6 +110,14 @@ class MainProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  taskCompleted(String taskId) {
+    int subTaskIndex =
+        _task[_currentTaskIs].taskList!.indexWhere((e) => e.taskId == taskId);
+    _task[_currentTaskIs].taskList![subTaskIndex].taskStatus =
+        !_task[_currentTaskIs].taskList![subTaskIndex].taskStatus;
+    notifyListeners();
+  }
+
   removeTaskFromList(String taskId) async {
     try {
       if (_task[_currentTaskIs].taskList != null) {
@@ -116,22 +125,19 @@ class MainProvider with ChangeNotifier {
             .taskList!
             .indexWhere((element) => element.taskId == taskId);
 
-        if (_taskIndex != -1) {
-          // Remove task from list locally
-          _task[_currentTaskIs].taskList!.removeAt(_taskIndex);
-
+        if (_taskIndex >= 0) {
           // Update Firestore document
           await FirebaseFirestore.instance
               .collection(FirebaseAuth.instance.currentUser!.uid)
               .doc(_task[_currentTaskIs].taskTitle)
               .update({
-            "task-list": _task[_currentTaskIs]
-                .taskList!
-                .map((task) => task.toJson())
-                .toList(),
+            "task-list": FieldValue.arrayRemove(
+                [_task[_currentTaskIs].taskList![_taskIndex].toJson()]),
           });
+          // Remove task from list locally
+          _task[_currentTaskIs].taskList!.removeAt(_taskIndex);
 
-          print('Task removed successfully');
+          // print('Task removed successfully');
           notifyListeners(); // Notify listeners to update the UI
         } else {
           print('Task not found in the list');
@@ -141,9 +147,18 @@ class MainProvider with ChangeNotifier {
       print('Error removing task: $e');
     }
   }
+
   //  ----- End of Adding a new Task to the list ------
 
   // --------- Other options contole begin --------
+
+  bool _completedTaskShow = false;
+  bool get completedTaskShow => _completedTaskShow;
+
+  openCompletedTask() {
+    _completedTaskShow = !_completedTaskShow;
+    notifyListeners();
+  }
 
   bool _mainTaskOption = false;
   bool get mainTaskOption => _mainTaskOption;
