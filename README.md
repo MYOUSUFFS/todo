@@ -1,16 +1,18 @@
-# todo
+# Todo App
 
-A new Flutter project.
+This is a simple Todo App inspired by the UI design of Google Todo, built using [Flutter](https://flutter.dev/) for managing tasks and keeping track of your daily activities.
+
+## Features
+
+- Add new tasks
+- Mark tasks as completed
+- Delete tasks
+- View a list of tasks
+- Edit existing tasks
+- Filter tasks based on status (completed or pending)
+- Clear all completed tasks
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To run this application online, you need to go [Flutter](https://flutter.dev/).
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
