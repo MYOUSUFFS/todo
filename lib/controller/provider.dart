@@ -102,19 +102,52 @@ class MainProvider with ChangeNotifier {
     String? description,
     String? date_time,
   }) {
-    int subTaskIndex =
-        _task[_currentTaskIs].taskList!.indexWhere((e) => e.taskId == taskId);
-    _task[_currentTaskIs].taskList![subTaskIndex].taskName = "${name}";
-    _task[_currentTaskIs].taskList![subTaskIndex].taskDescription = description;
-    _task[_currentTaskIs].taskList![subTaskIndex].taskEndDate = date_time;
-    notifyListeners();
+    try {
+      int subTaskIndex =
+          _task[_currentTaskIs].taskList!.indexWhere((e) => e.taskId == taskId);
+      final _finded = _task[_currentTaskIs].taskList![subTaskIndex];
+      FirebaseFirestore.instance
+          .collection(FirebaseAuth.instance.currentUser!.uid)
+          .doc(_task[_currentTaskIs].taskTitle)
+          .update({
+        "task-list": FieldValue.arrayRemove([_finded.toJson()])
+      });
+      _finded.taskName = "${name}";
+      _finded.taskDescription = description;
+      _finded.taskEndDate = date_time;
+      FirebaseFirestore.instance
+          .collection(FirebaseAuth.instance.currentUser!.uid)
+          .doc(_task[_currentTaskIs].taskTitle)
+          .update({
+        "task-list": FieldValue.arrayUnion([_finded.toJson()])
+      });
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
   }
 
   taskCompleted(String taskId) {
-    int subTaskIndex =
-        _task[_currentTaskIs].taskList!.indexWhere((e) => e.taskId == taskId);
-    _task[_currentTaskIs].taskList![subTaskIndex].taskStatus =
-        !_task[_currentTaskIs].taskList![subTaskIndex].taskStatus;
+    try {
+      int subTaskIndex =
+          _task[_currentTaskIs].taskList!.indexWhere((e) => e.taskId == taskId);
+      final _finded = _task[_currentTaskIs].taskList![subTaskIndex];
+      FirebaseFirestore.instance
+          .collection(FirebaseAuth.instance.currentUser!.uid)
+          .doc(_task[_currentTaskIs].taskTitle)
+          .update({
+        "task-list": FieldValue.arrayRemove([_finded.toJson()])
+      });
+      _finded.taskStatus = !_finded.taskStatus;
+      FirebaseFirestore.instance
+          .collection(FirebaseAuth.instance.currentUser!.uid)
+          .doc(_task[_currentTaskIs].taskTitle)
+          .update({
+        "task-list": FieldValue.arrayUnion([_finded.toJson()])
+      });
+    } catch (e) {
+      print(e);
+    }
     notifyListeners();
   }
 

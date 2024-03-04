@@ -26,22 +26,21 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => MainProvider()),
       ],
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Scaffold(
-                    body: Center(child: CircularProgressIndicator()));
-              } else if (snapshot.hasData) {
-                return const MyHome();
-              } else {
-                return MyAuth();
-              }
-            },
-          )
-          // FirebaseAuth.instance.currentUser == null ? MyAuth() : MyHome(),
-          ),
+        debugShowCheckedModeBanner: false,
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Scaffold(
+                  body: Center(child: CircularProgressIndicator()));
+            } else if (snapshot.hasData) {
+              return const MyHome();
+            } else {
+              return MyAuth();
+            }
+          },
+        ),
+      ),
     );
   }
 }

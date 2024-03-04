@@ -21,86 +21,89 @@ class _MyTaskState extends State<MyTask> {
     if (provider.task.isNotEmpty) {
       listTasks = provider.task[provider.currentTaskIs].taskList;
     }
-    return Column(
-      // mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        if (provider.task.isNotEmpty &&
-            provider.task[provider.currentTaskIs].taskList != null)
-          Row(
-            children: [
-              Flexible(
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.add_task_rounded,
-                    color: Colors.blueAccent,
-                  ),
-                  title: const Text("Add a task"),
-                  onTap: () {
-                    newTaskAdded(context);
-                  },
-                  titleTextStyle: const TextStyle(color: Colors.blueAccent),
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  provider.doSubTaskOptions();
-                },
-                icon: const Icon(
-                  Icons.menu,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
-          ),
-        if (listTasks?.isNotEmpty ?? false)
-          const Expanded(
-            child: SubTasksList(viewIs: false),
-          ),
-        if (listTasks?.isEmpty ?? true)
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (provider.task.isNotEmpty &&
+              provider.task[provider.currentTaskIs].taskList != null)
+            Row(
               children: [
-                CircleAvatar(
-                  backgroundColor: Colors.lightBlue.shade50,
-                  radius: 150,
-                  child: Image.asset(
-                    MyTodoImages.todoHome,
+                Flexible(
+                  child: ListTile(
+                    leading: const Icon(
+                      Icons.add_task_rounded,
+                      color: Colors.blueAccent,
+                    ),
+                    title: const Text("Add a task"),
+                    onTap: () {
+                      newTaskAdded(context);
+                    },
+                    titleTextStyle: const TextStyle(color: Colors.blueAccent),
                   ),
                 ),
-                const Text(
-                  "No tasks yet",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 24,
+                IconButton(
+                  onPressed: () {
+                    provider.doSubTaskOptions();
+                  },
+                  icon: const Icon(
+                    Icons.menu,
+                    color: Colors.grey,
                   ),
                 ),
-                const Text(
-                  "Add your to-dos and keep track",
-                  style: TextStyle(color: Colors.grey),
-                )
               ],
             ),
-          ),
-        if (provider.task.isNotEmpty &&
-            provider.task[provider.currentTaskIs].taskList!.isNotEmpty)
-          ListTile(
-            leading: Icon(provider.completedTaskShow
-                ? Icons.arrow_drop_down_outlined
-                : Icons.arrow_right_outlined),
-            title: const Text("Completed"),
-            onTap: () {
-              provider.openCompletedTask();
-            },
-            trailing: Icon(
-              provider.completedTaskShow ? Icons.close : null,
-              color: Colors.red,
+          if (listTasks?.isNotEmpty ?? false)
+            const Expanded(
+              child: SubTasksList(viewIs: false),
             ),
-          ),
-        if (provider.completedTaskShow)
-          Flexible(child: SubTasksList(viewIs: true)),
-      ],
+          if (listTasks?.isEmpty ?? true)
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.lightBlue.shade50,
+                    radius: 150,
+                    child: Image.asset(
+                      MyTodoImages.todoHome,
+                    ),
+                  ),
+                  const Text(
+                    "No tasks yet",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 24,
+                    ),
+                  ),
+                  const Text(
+                    "Add your to-dos and keep track",
+                    style: TextStyle(color: Colors.grey),
+                  )
+                ],
+              ),
+            ),
+          if (provider.task.isNotEmpty &&
+              provider.task[provider.currentTaskIs].taskList!.isNotEmpty)
+            ListTile(
+              leading: Icon(provider.completedTaskShow
+                  ? Icons.arrow_drop_down_outlined
+                  : Icons.arrow_right_outlined),
+              title: const Text("Completed"),
+              onTap: () {
+                provider.openCompletedTask();
+              },
+              trailing: Icon(
+                provider.completedTaskShow ? Icons.close : null,
+                color: Colors.red,
+              ),
+            ),
+          if (provider.completedTaskShow)
+            Flexible(child: SubTasksList(viewIs: true)),
+        ],
+      ),
     );
   }
 }
