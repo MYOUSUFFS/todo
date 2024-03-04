@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/provider.dart';
+import '../../../model/task.dart';
 import '../../utils/new_task.dart';
 import '../../widget/task_widget.dart';
 
@@ -15,7 +16,16 @@ class SubTasksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<MainProvider>(context);
-    final task = provider.task[provider.currentTaskIs].taskList;
+    List<TaskList> task = provider.task[provider.currentTaskIs].taskList ?? [];
+
+    if (provider.sortBy == "old") {
+      task.sort((a, b) =>
+          (b.taskEndDate ?? b.taskId).compareTo(a.taskEndDate ?? a.taskId));
+    } else if (provider.sortBy == "new") {
+      task.sort((a, b) =>
+          ((a.taskEndDate ?? a.taskId).compareTo(b.taskEndDate ?? b.taskId)));
+    }
+
     return ListView.builder(
       shrinkWrap: true,
       itemBuilder: (context, index) {
@@ -28,7 +38,7 @@ class SubTasksList extends StatelessWidget {
         else
           return SizedBox();
       },
-      itemCount: task!.length,
+      itemCount: task.length,
     );
   }
 }

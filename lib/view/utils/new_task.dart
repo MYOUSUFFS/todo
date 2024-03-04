@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/controller/provider.dart';
 import 'package:todo/model/task.dart';
@@ -26,8 +27,12 @@ newTaskTitle(BuildContext context) {
           actions: [
             ElevatedButton(
               onPressed: () {
-                provider.addTaskTitle(heading.text);
-                Navigator.pop(context);
+                if (heading.text.isNotEmpty) {
+                  provider.addTaskTitle(heading.text);
+                  Navigator.pop(context);
+                } else {
+                  toast("Please fill all details!");
+                }
               },
               child: const Text("Submit"),
             )

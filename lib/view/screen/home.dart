@@ -163,23 +163,39 @@ class _MyHomeState extends State<MyHome> {
                                   "Sort by",
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                const ListTile(
-                                  title: Text("New First"),
-                                  leading: Icon(Icons.done_rounded),
+                                ListTile(
+                                  title: Text("Up Coming"),
+                                  leading: Icon(provider.sortBy == "new"
+                                      ? Icons.done_rounded
+                                      : null),
+                                  onTap: () {
+                                    provider.changeSort("new");
+                                  },
                                 ),
-                                const ListTile(
-                                  title: Text("Old First"),
-                                  leading: Icon(null),
+                                ListTile(
+                                  title: Text("Late"),
+                                  leading: Icon(provider.sortBy == "old"
+                                      ? Icons.done_rounded
+                                      : null),
+                                  onTap: () {
+                                    provider.changeSort("old");
+                                  },
                                 ),
                                 Divider(
                                   thickness: 1,
                                   color: Colors.grey.shade300,
                                 ),
-                                const ListTile(
-                                  title: Text("Rename"),
-                                ),
-                                const ListTile(
-                                  title: Text("Delete list"),
+                                // const ListTile(
+                                //   title: Text("Rename"),
+                                // ),
+                                 ListTile(
+                                  title: Text(
+                                    "Delete All",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                  onTap: (){
+                                    provider.deleteTaskTitleWithThatList(provider.currentTaskIs);
+                                  },
                                 )
                               ],
                             ),

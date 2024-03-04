@@ -73,8 +73,17 @@ class MainProvider with ChangeNotifier {
   }
 
   deleteTaskTitleWithThatList(int taskIndex) {
-    _task.removeAt(taskIndex);
-    notifyListeners();
+    try {
+      FirebaseFirestore.instance
+          .collection(FirebaseAuth.instance.currentUser!.uid)
+          .doc(_task[_currentTaskIs].taskTitle!)
+          .delete();
+      _task.removeAt(taskIndex);
+      _currentTaskIs = 0;
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
   }
   // --- End of New Task Title ----
 
@@ -218,4 +227,13 @@ class MainProvider with ChangeNotifier {
   }
 
   //  --------- Other options control end -------
+  // ------------------ Sort task ----------------
+  String _sortBy = "new"; // Another is old
+  String get sortBy => _sortBy;
+  changeSort(String type) {
+    if (_sortBy == type) return;
+    _sortBy = type;
+    closeAllOption();
+    notifyListeners();
+  }
 }
