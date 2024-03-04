@@ -22,9 +22,9 @@ class UncompletedTask extends StatelessWidget {
             onTap: () {
               editTask(context, task[index]);
             },
-            child: TaskView(task: task[index]));
+            child: TaskView(task: task![index]));
       },
-      itemCount: task!.length,
+      itemCount: provider.task[provider.currentTaskIs].taskList!.length,
     );
   }
 }

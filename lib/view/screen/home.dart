@@ -88,6 +88,7 @@ class _MyHomeState extends State<MyHome> {
             IconButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();
+                provider.task.clear();
               },
               icon: const Icon(
                 Icons.exit_to_app,
