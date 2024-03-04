@@ -7,7 +7,7 @@ import '../utils/date_time.dart';
 import '../utils/date_view.dart';
 
 class TaskInput extends StatefulWidget {
-  TaskInput({super.key});
+  const TaskInput({super.key});
 
   @override
   State<TaskInput> createState() => _TaskInputState();
@@ -26,7 +26,7 @@ class _TaskInputState extends State<TaskInput> {
       title: TextFormField(
         autofocus: true,
         controller: title,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintText: "Title",
           border: InputBorder.none,
         ),
@@ -36,12 +36,12 @@ class _TaskInputState extends State<TaskInput> {
         children: [
           TextFormField(
             controller: details,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               // isCollapsed: true,
               hintText: "Details",
               border: InputBorder.none,
             ),
-            style: TextStyle(color: Colors.grey, fontSize: 14),
+            style: const TextStyle(color: Colors.grey, fontSize: 14),
             minLines: 1,
             maxLines: 4,
           ),
@@ -57,8 +57,8 @@ class _TaskInputState extends State<TaskInput> {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Row(
                 children: [
-                  Icon(Icons.calendar_today),
-                  SizedBox(width: 8),
+                  const Icon(Icons.calendar_today),
+                  const SizedBox(width: 8),
                   Text(date != null ? myDateFormate(date!) : "Date/Time"),
                 ],
               ),
@@ -71,7 +71,7 @@ class _TaskInputState extends State<TaskInput> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.delete_outline_rounded,
                   color: Colors.red,
                 ),
@@ -87,7 +87,7 @@ class _TaskInputState extends State<TaskInput> {
                   provider.addNewTaskToList(task);
                   Navigator.pop(context);
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.done,
                   color: Colors.green,
                 ),
@@ -106,23 +106,24 @@ class TaskView extends StatelessWidget {
 
   Color identifyPriority(DateTime taskDate) {
     DateTime now = DateTime.now();
-    if (taskDate.isBefore(now))
+    if (taskDate.isBefore(now)) {
       return Colors.red; // If the task is overdue, show it in red color
-    else if ((taskDate.day - now.day) <= 1 &&
-        (taskDate.month == now.month || taskDate.year == now.year))
+    } else if ((taskDate.day - now.day) <= 1 &&
+        (taskDate.month == now.month || taskDate.year == now.year)) {
       return Colors.orange;
-    else
+    } else {
       return Colors.green;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     // print("${task.taskEndDate}");
     return ListTile(
-      leading: Icon(Icons.circle_outlined),
+      leading: const Icon(Icons.circle_outlined),
       title: Text(
-        '${task.taskName}',
-        style: TextStyle(
+        task.taskName,
+        style: const TextStyle(
           fontWeight: FontWeight.w500,
           overflow: TextOverflow.ellipsis,
         ),
@@ -135,7 +136,7 @@ class TaskView extends StatelessWidget {
           if (task.taskDescription != null) ...[
             Text(
               task.taskDescription!,
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.grey, overflow: TextOverflow.ellipsis),
               maxLines: 2,
             ),
@@ -170,8 +171,9 @@ class _TaskEditState extends State<TaskEdit> {
   void initState() {
     title = TextEditingController(text: widget.task.taskName);
     details = TextEditingController(text: widget.task.taskDescription);
-    if (widget.task.taskEndDate != null)
+    if (widget.task.taskEndDate != null) {
       date = DateTime.parse(widget.task.taskEndDate!);
+    }
     super.initState();
   }
 
@@ -182,7 +184,7 @@ class _TaskEditState extends State<TaskEdit> {
       title: TextFormField(
         autofocus: true,
         controller: title,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintText: "Title",
           border: InputBorder.none,
         ),
@@ -192,12 +194,12 @@ class _TaskEditState extends State<TaskEdit> {
         children: [
           TextFormField(
             controller: details,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               // isCollapsed: true,
               hintText: "Details",
               border: InputBorder.none,
             ),
-            style: TextStyle(color: Colors.grey, fontSize: 14),
+            style: const TextStyle(color: Colors.grey, fontSize: 14),
             minLines: 1,
             maxLines: 4,
           ),
@@ -213,8 +215,8 @@ class _TaskEditState extends State<TaskEdit> {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Row(
                 children: [
-                  Icon(Icons.calendar_today),
-                  SizedBox(width: 8),
+                  const Icon(Icons.calendar_today),
+                  const SizedBox(width: 8),
                   Text(date != null ? myDateFormate(date!) : "Date/Time"),
                 ],
               ),
@@ -228,7 +230,7 @@ class _TaskEditState extends State<TaskEdit> {
                   provider.removeTaskFromList(widget.task.taskId);
                   Navigator.pop(context);
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.delete_outline_rounded,
                   color: Colors.red,
                 ),
@@ -243,7 +245,7 @@ class _TaskEditState extends State<TaskEdit> {
                   );
                   Navigator.pop(context);
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.done,
                   color: Colors.green,
                 ),

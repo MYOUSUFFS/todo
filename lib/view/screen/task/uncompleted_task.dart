@@ -20,7 +20,7 @@ class UncompletedTask extends StatelessWidget {
       itemBuilder: (context, index) {
         return InkWell(
             onTap: () {
-              editTask(context,task[index]);
+              editTask(context, task[index]);
             },
             child: TaskView(task: task[index]));
       },
@@ -39,23 +39,24 @@ class TaskWidget extends StatelessWidget {
 
   Color identifyPriority(DateTime taskDate) {
     DateTime now = DateTime.now();
-    if (taskDate.isBefore(now))
+    if (taskDate.isBefore(now)) {
       return Colors.red; // If the task is overdue, show it in red color
-    else if ((taskDate.day - now.day) <= 1 &&
-        (taskDate.month == now.month || taskDate.year == now.year))
+    } else if ((taskDate.day - now.day) <= 1 &&
+        (taskDate.month == now.month || taskDate.year == now.year)) {
       return Colors.orange;
-    else
+    } else {
       return Colors.green;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(Icons.circle_outlined),
+      leading: const Icon(Icons.circle_outlined),
       title: edit
           ? TextFormField(
               autofocus: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Title",
                 border: InputBorder.none,
               ),
@@ -64,7 +65,7 @@ class TaskWidget extends StatelessWidget {
             )
           : Text(
               'Uncompleted Task $index',
-              style: TextStyle(fontWeight: FontWeight.w500),
+              style: const TextStyle(fontWeight: FontWeight.w500),
             ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,26 +74,26 @@ class TaskWidget extends StatelessWidget {
           edit
               ? TextFormField(
                   autofocus: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     isCollapsed: true,
                     hintText: "Details",
                     border: InputBorder.none,
                   ),
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                  style: const TextStyle(color: Colors.grey, fontSize: 12),
                   minLines: 1,
                   maxLines: 4,
                 )
               : Text(
                   "Task $index",
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.grey, overflow: TextOverflow.ellipsis),
                   maxLines: 2,
                 ),
           edit
               ? InkWell(
                   onTap: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
                     child: Row(
                       children: [
                         Icon(Icons.calendar_today),
@@ -113,15 +114,15 @@ class TaskWidget extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.delete_outline_rounded,
                     color: Colors.red,
                   ),
                 ),
-                SizedBox(width: 40),
+                const SizedBox(width: 40),
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.done,
                     color: Colors.green,
                   ),

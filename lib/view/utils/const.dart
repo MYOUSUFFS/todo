@@ -1,3 +1,3 @@
-class MyTodoImages{
-  static const  String todo_home = "image/vector/todo_home.png";
+class MyTodoImages {
+  static const String todoHome = "image/vector/todoHome.png";
 }

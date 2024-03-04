@@ -24,10 +24,10 @@ class MyBoxShadow extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            offset: Offset(2, 5),
+            offset: const Offset(2, 5),
             blurRadius: 6,
             spreadRadius: 4,
-            color: Color(0xFF000000).withOpacity(.20),
+            color: const Color(0xFF000000).withOpacity(.20),
           ),
         ],
       ),

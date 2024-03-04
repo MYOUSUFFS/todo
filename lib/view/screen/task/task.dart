@@ -18,8 +18,9 @@ class _MyTaskState extends State<MyTask> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<MainProvider>(context);
-    if (provider.task.isNotEmpty)
+    if (provider.task.isNotEmpty) {
       listTasks = provider.task[provider.currentTaskIs].taskList;
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -29,22 +30,22 @@ class _MyTaskState extends State<MyTask> {
             children: [
               Flexible(
                 child: ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.add_task_rounded,
                     color: Colors.blueAccent,
                   ),
-                  title: Text("Add a task"),
+                  title: const Text("Add a task"),
                   onTap: () {
                     newTaskAdded(context);
                   },
-                  titleTextStyle: TextStyle(color: Colors.blueAccent),
+                  titleTextStyle: const TextStyle(color: Colors.blueAccent),
                 ),
               ),
               IconButton(
                 onPressed: () {
                   provider.doSubTaskOptions();
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.menu,
                   color: Colors.grey,
                 ),
@@ -52,7 +53,7 @@ class _MyTaskState extends State<MyTask> {
             ],
           ),
         if (listTasks?.isNotEmpty ?? false)
-          Expanded(
+          const Expanded(
             child: UncompletedTask(),
           ),
         if (listTasks?.isEmpty ?? true)
@@ -65,17 +66,17 @@ class _MyTaskState extends State<MyTask> {
                   backgroundColor: Colors.lightBlue.shade50,
                   radius: 150,
                   child: Image.asset(
-                    "${MyTodoImages.todo_home}",
+                    MyTodoImages.todoHome,
                   ),
                 ),
-                Text(
+                const Text(
                   "No tasks yet",
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 24,
                   ),
                 ),
-                Text(
+                const Text(
                   "Add your to-dos and keep track",
                   style: TextStyle(color: Colors.grey),
                 )
@@ -83,15 +84,15 @@ class _MyTaskState extends State<MyTask> {
             ),
           ),
         ListTile(
-          leading: Icon(Icons.arrow_right_outlined),
-          title: Text("Completed"),
+          leading: const Icon(Icons.arrow_right_outlined),
+          title: const Text("Completed"),
           onTap: () {},
         ),
         Visibility(
           visible: false,
           child: ListView.builder(
             itemCount: 0,
-            itemBuilder: (context, index) => ListTile(),
+            itemBuilder: (context, index) => const ListTile(),
           ),
         )
         // Text("data"),

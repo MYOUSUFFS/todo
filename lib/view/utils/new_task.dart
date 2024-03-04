@@ -12,7 +12,7 @@ newTaskTitle(BuildContext context) {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("New Heading"),
+          title: const Text("New Heading"),
           content: TextFormField(
             autofocus: true,
             controller: heading,
@@ -29,7 +29,7 @@ newTaskTitle(BuildContext context) {
                 provider.addTaskTitle(heading.text);
                 Navigator.pop(context);
               },
-              child: Text("Submit"),
+              child: const Text("Submit"),
             )
           ],
         );
@@ -41,10 +41,10 @@ newTaskAdded(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text("Create your new task"),
+        title: const Text("Create your new task"),
         content: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: TaskInput(),
+          child: const TaskInput(),
         ),
       );
     },
@@ -55,7 +55,7 @@ editTask(BuildContext context, TaskList task) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text("Edit Task"),
+      title: const Text("Edit Task"),
       content: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: TaskEdit(

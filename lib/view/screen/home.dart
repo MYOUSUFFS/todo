@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/controller/provider.dart';
@@ -6,9 +7,22 @@ import 'package:todo/view/screen/task/task.dart';
 import '../widget/box_shadow.dart';
 import '../utils/new_task.dart';
 
-class MyHome extends StatelessWidget {
+class MyHome extends StatefulWidget {
   const MyHome({super.key});
+
+  @override
+  State<MyHome> createState() => _MyHomeState();
+}
+
+class _MyHomeState extends State<MyHome> {
   final String taskList = "MyTask";
+
+  @override
+  void initState() {
+    final provider = Provider.of<MainProvider>(context, listen: false);
+    provider.fetchTaskTitle();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +37,7 @@ class MyHome extends StatelessWidget {
           title: ListTile(
               title: Text(
                 "Tasks".toUpperCase(),
-                style: TextStyle(
+                style: const TextStyle(
                   letterSpacing: 2,
                   color: Colors.grey,
                   fontSize: 12,
@@ -41,15 +55,15 @@ class MyHome extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (provider.task.isEmpty) ...[
-                      Text(
+                      const Text(
                         "Add Task",
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      SizedBox(width: 10),
-                      Icon(
+                      const SizedBox(width: 10),
+                      const Icon(
                         Icons.add_chart,
                       )
                     ] else ...[
@@ -57,24 +71,35 @@ class MyHome extends StatelessWidget {
                         width: MediaQuery.of(context).size.width / 1.5,
                         child: Text(
                           "${provider.task[provider.currentTaskIs].taskTitle}",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w500,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),
-                      SizedBox(width: 10),
-                      Icon(Icons.arrow_drop_down_sharp)
+                      const SizedBox(width: 10),
+                      const Icon(Icons.arrow_drop_down_sharp)
                     ],
                   ],
                 ),
               )),
+          actions: [
+            IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              icon: const Icon(
+                Icons.exit_to_app,
+                color: Colors.red,
+              ),
+            ),
+          ],
         ),
         body: SafeArea(
           child: Stack(
             children: [
-              MyTask(),
+              const MyTask(),
               Visibility(
                 visible: provider.mainTaskOption,
                 child: MyBoxShadow(
@@ -105,8 +130,8 @@ class MyHome extends StatelessWidget {
                       ),
                       Divider(thickness: 1, color: Colors.grey.shade300),
                       ListTile(
-                        title: Text("Create new list"),
-                        leading: Icon(Icons.post_add),
+                        title: const Text("Create new list"),
+                        leading: const Icon(Icons.post_add),
                         onTap: () {
                           newTaskTitle(context);
                         },
@@ -129,15 +154,15 @@ class MyHome extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
+                            const Text(
                               "Sort by",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            ListTile(
+                            const ListTile(
                               title: Text("New First"),
                               leading: Icon(Icons.done_rounded),
                             ),
-                            ListTile(
+                            const ListTile(
                               title: Text("Old First"),
                               leading: Icon(null),
                             ),
@@ -145,10 +170,10 @@ class MyHome extends StatelessWidget {
                               thickness: 1,
                               color: Colors.grey.shade300,
                             ),
-                            ListTile(
+                            const ListTile(
                               title: Text("Rename"),
                             ),
-                            ListTile(
+                            const ListTile(
                               title: Text("Delete list"),
                             )
                           ],
