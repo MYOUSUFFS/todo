@@ -22,7 +22,7 @@ class _MyTaskState extends State<MyTask> {
       listTasks = provider.task[provider.currentTaskIs].taskList;
     }
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      // mainAxisAlignment: MainAxisAlignment.center,
       children: [
         if (provider.task.isNotEmpty &&
             provider.task[provider.currentTaskIs].taskList != null)
@@ -91,12 +91,15 @@ class _MyTaskState extends State<MyTask> {
                 : Icons.arrow_right_outlined),
             title: const Text("Completed"),
             onTap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) => SubTasksList(viewIs: true),
-              );
+              provider.openCompletedTask();
             },
+            trailing: Icon(
+              provider.completedTaskShow ? Icons.close : null,
+              color: Colors.red,
+            ),
           ),
+        if (provider.completedTaskShow)
+          Flexible(child: SubTasksList(viewIs: true)),
       ],
     );
   }

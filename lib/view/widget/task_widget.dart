@@ -125,7 +125,10 @@ class TaskView extends StatelessWidget {
           toast("Task Updated");
         },
         padding: EdgeInsets.all(8),
-        icon: Icon(task.taskStatus ? Icons.done : Icons.circle_outlined),
+        icon: task.taskStatus
+            ? Icon(Icons.done, color: Colors.lightBlue)
+            : Icon(Icons.circle_outlined),
+        // Icon(task.taskStatus ? Icons.done : Icons.circle_outlined),
       ),
       title: Text(
         task.taskName,
